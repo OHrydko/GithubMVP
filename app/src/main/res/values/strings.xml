@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GithubProfile</string>
+    <string name="click">Search</string>
+    <string name="repository">Public repository %1$d</string>
+</resources>
