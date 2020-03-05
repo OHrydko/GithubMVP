@@ -1,5 +1,6 @@
 package com.example.githubprofile.base
 
+import android.content.Context
 import com.example.githubprofile.di.component.DaggerInjector
 import com.example.githubprofile.di.module.ContextModule
 import com.example.githubprofile.di.module.NetworkModule
@@ -24,7 +25,7 @@ open class BasePresenter<out V : BaseView>(protected val view: V) {
         }
     }
 
-    open fun onViewCreated() {}
+    open fun onViewCreated(context: Context) {}
     open fun onViewDestroyed() {}
 
 }

@@ -24,7 +24,7 @@ class ReposActivity : BaseActivity<ReposPresenter>(), ReposView {
         toolbar.setNavigationOnClickListener { super.onBackPressed() }
         val login: String? = intent.getStringExtra("login")
         presenter.name = login.toString()
-        presenter.onViewCreated()
+        presenter.onViewCreated(this)
     }
 
     override fun onDestroy() {

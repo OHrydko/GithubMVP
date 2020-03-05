@@ -55,4 +55,9 @@ dependencies {
     // Data binding
     kapt "com.android.databinding:compiler:3.1.4"
     implementation 'com.google.android.material:material:1.1.0'
+
+    def room_version = "2.2.4"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 }

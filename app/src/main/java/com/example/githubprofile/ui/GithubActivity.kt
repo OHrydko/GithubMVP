@@ -20,7 +20,7 @@ class GithubActivity : BaseActivity<GithubPresenter>(), GithubView {
         click.setOnClickListener {
             if (editTextName.text.isNotEmpty()) {
                 presenter.name = editTextName.text.toString()
-                presenter.onViewCreated()
+                presenter.onViewCreated(this)
             }
         }
 
