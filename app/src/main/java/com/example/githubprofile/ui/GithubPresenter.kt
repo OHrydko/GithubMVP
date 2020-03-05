@@ -3,7 +3,6 @@ package com.example.githubprofile.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import com.example.githubprofile.base.BasePresenter
-import com.example.githubprofile.db.AppDataBase
 import com.example.githubprofile.db.UserDao
 import com.example.githubprofile.network.ApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,16 +15,14 @@ class GithubPresenter(githubView: GithubView) : BasePresenter<GithubView>(github
     lateinit var apiService: ApiService
     private var subscription: Disposable? = null
     var name: String = ""
-    private var appDataBase: AppDataBase? = null
-    private var userDao: UserDao? = null
+    @Inject
+    lateinit var userDao: UserDao
 
     @SuppressLint("DefaultLocale")
     override fun onViewCreated(context: Context) {
         view.showLoading()
-        appDataBase = AppDataBase.getDataBase(context)
-        userDao = appDataBase?.userDao()
 
-        if (userDao?.checkLoginExists(name) == 0) {
+        if (userDao.checkLoginExistsUser(name) == 0) {
             subscription = apiService
                 .getUser(name)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -35,7 +32,7 @@ class GithubPresenter(githubView: GithubView) : BasePresenter<GithubView>(github
                     { user ->
                         view.showUserInfo(user)
                         Thread {
-                            userDao?.insert(user)
+                            userDao.insertUser(user)
                         }.start()
 
 
@@ -47,7 +44,7 @@ class GithubPresenter(githubView: GithubView) : BasePresenter<GithubView>(github
                     }
                 )
         } else {
-            userDao?.getUser(login = name.toLowerCase())?.let { view.showUserInfo(it) }
+            userDao.getUser(login = name.toLowerCase())?.let { view.showUserInfo(it) }
             view.hideLoading()
         }
 
